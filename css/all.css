@@ -1,0 +1,207 @@
+/* ------------------------------------------------------------------
+ * [ web desktop ]
+ * Project:	web desktop
+ * Version:	0.1
+ * Last change:	2014-12-24 14:17:37
+ * Assigned to:	Cungen(cg)
+ * ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------
+ * [ Table of contents ]
+ * 1. variables
+ * 2. mixin
+ * 3. theme
+ * 4. utils
+ * 5. taskbar .taskbar
+ * 6. desktop .desktop
+ * 7. window .window
+ * ------------------------------------------------------------------ */
+/*------------------------------------------------------------------
+ * [ 1. variables ] */
+/*------------------------------------------------------------------
+ * [ 2. mixin ] */
+/*------------------------------------------------------------------
+ * [ 3. theme ] */
+* {
+  font-family: Georgia, "Times New Roman", "Microsoft YaHei", STXihei, serif; }
+
+.main-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: url("../imgs/bg1.png");
+  background-size: 100% auto;
+  z-index: 1;
+  overflow: hidden; }
+  .main-container a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.54); }
+    .main-container a:hover {
+      color: rgba(255, 255, 255, 0.87); }
+
+/*------------------------------------------------------------------
+ * [ 4. utils ] */
+.text-center {
+  text-align: center; }
+
+.text-primary {
+  color: rgba(255, 255, 255, 0.87); }
+
+/*------------------------------------------------------------------
+ * [ 5. taskbar .taskbar ] */
+.taskbar {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  bottom: 0;
+  background-color: #212121;
+  z-index: 9999; }
+  .taskbar .start {
+    position: relative;
+    padding: 5px;
+    width: 40px;
+    height: 40px; }
+    .taskbar .start a {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      text-align: center; }
+      .taskbar .start a:hover:before, .taskbar .start a:hover:after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 0;
+        height: 0;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px; }
+      .taskbar .start a:hover:before {
+        top: 0;
+        border-style: solid dashed dashed dashed;
+        border-color: rgba(255, 255, 255, 0.54) transparent transparent transparent; }
+      .taskbar .start a:hover:after {
+        bottom: 0;
+        border-style: dashed dashed solid dashed;
+        border-color: transparent transparent rgba(255, 255, 255, 0.54) transparent; }
+      .taskbar .start a i {
+        font-size: 35px;
+        height: 40px;
+        line-height: 40px;
+        color: rgba(255, 255, 255, 0.87); }
+
+/*------------------------------------------------------------------
+ * [ 6. desktop .desktop ] */
+.desktop .desk-icons {
+  list-style: none;
+  margin: 0;
+  padding: 25px; }
+  .desktop .desk-icons li {
+    padding: 5px;
+    display: inline-block;
+    text-align: center; }
+    .desktop .desk-icons li a {
+      color: rgba(255, 255, 255, 0.54);
+      text-decoration: none;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.26); }
+      .desktop .desk-icons li a:hover {
+        color: rgba(255, 255, 255, 0.87); }
+    .desktop .desk-icons li i {
+      font-size: 40px; }
+    .desktop .desk-icons li span {
+      display: block; }
+
+/* ------------------------------------------------------------------
+ * [ 7. window .window ] */
+.window {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  resize: both;
+  width: 600px;
+  height: 400px;
+  background-color: rgba(255, 255, 255, 0.26);
+  overflow: hidden;
+  z-index: auto; }
+  .window .title-bar {
+    height: 32px;
+    background-color: #0288D1;
+    overflow: hidden;
+    resize: none; }
+    .window .title-bar .win-ctrl {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      margin-right: 4px;
+      padding: 0;
+      list-style: none;
+      height: 25px; }
+      .window .title-bar .win-ctrl li {
+        float: right;
+        height: 25px;
+        text-align: center; }
+        .window .title-bar .win-ctrl li a {
+          position: relative;
+          display: block;
+          line-height: 25px; }
+          .window .title-bar .win-ctrl li a:hover i.max, .window .title-bar .win-ctrl li a:hover i.min, .window .title-bar .win-ctrl li a:hover i.close:before, .window .title-bar .win-ctrl li a:hover i.close:after {
+            border-color: rgba(255, 255, 255, 0.87); }
+          .window .title-bar .win-ctrl li a i {
+            margin: 0 6px;
+            font-size: 18px; }
+            .window .title-bar .win-ctrl li a i.close {
+              position: relative;
+              display: inline-block;
+              width: 14px;
+              height: 14px; }
+              .window .title-bar .win-ctrl li a i.close:before, .window .title-bar .win-ctrl li a i.close:after {
+                content: "";
+                display: block;
+                position: absolute;
+                width: 14px;
+                height: 0;
+                top: 50%;
+                left: 0;
+                margin-left: -2px;
+                border: 1px solid rgba(255, 255, 255, 0.54);
+                -webkit-border-radius: 2px;
+                -moz-border-radius: 2px;
+                border-radius: 2px; }
+              .window .title-bar .win-ctrl li a i.close:before {
+                -webkit-transform: rotate(45deg);
+                -moz-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                -o-transform: rotate(45deg);
+                transform: rotate(45deg); }
+              .window .title-bar .win-ctrl li a i.close:after {
+                -webkit-transform: rotate(-45deg);
+                -moz-transform: rotate(-45deg);
+                -ms-transform: rotate(-45deg);
+                -o-transform: rotate(-45deg);
+                transform: rotate(-45deg); }
+            .window .title-bar .win-ctrl li a i.max {
+              display: inline-block;
+              width: 8px;
+              height: 8px;
+              border: 2px solid rgba(255, 255, 255, 0.54);
+              -webkit-border-radius: 2px;
+              -moz-border-radius: 2px;
+              border-radius: 2px; }
+            .window .title-bar .win-ctrl li a i.min {
+              display: inline-block;
+              width: 10px;
+              height: 0;
+              border: 1px solid rgba(255, 255, 255, 0.54);
+              -webkit-border-radius: 1px;
+              -moz-border-radius: 1px;
+              border-radius: 1px; }
+  .window .tool-bar {
+    height: 50px;
+    background-color: #03A9F4; }
+  .window .content {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.87); }
+
+/*# sourceMappingURL=all.css.map */

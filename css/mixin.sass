@@ -1,0 +1,54 @@
+/*------------------------------------------------------------------
+  [ 2. mixin ]
+
+=gradient($color1, $color2, $deg: -45deg)
+    background: $color1
+    background: -moz-linear-gradient($deg, $color1 50%, $color2 50%)
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(50%, $color1), color-stop(50%, $color2))
+    background: -webkit-linear-gradient($deg,  $color1 50%, $color2 50%)
+    background: -o-linear-gradient($deg, $color1 50%, $color2 50%)
+    background: -ms-linear-gradient($deg, $color1 50%, $color2 50%)
+    background: linear-gradient(180deg - $deg, $color1 50%, $color2 50%)
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=1 )
+
+=transition($value)
+    -webkit-transition: $value
+    -moz-transition: $value
+    -ms-transition: $value
+    -o-transition: $value
+    transition: $value
+
+=transform($value)
+    -webkit-transform: $value
+    -moz-transform: $value
+    -ms-transform: $value
+    -o-transform: $value
+    transform: $value
+
+=animation($name, $duration, $function: ease, $delay: 0s, $count: infinite)
+    -webkit-animation: #{$name} #{$duration} #{$function} #{$delay} #{$count}
+    -moz-animation: #{$name} #{$duration} #{$function} #{$delay} #{$count}
+    -ms-animation: #{$name} #{$duration} #{$function} #{$delay} #{$count}
+    -o-animation: #{$name} #{$duration} #{$function} #{$delay} #{$count}
+    animation: #{$name} #{$duration} #{$function} #{$delay} #{$count}
+=box-shadow($value)
+    -webkit-box-shadow: $value
+    -moz-box-shadow: $value
+    box-shadow: $value
+=keyframes($name)
+    @-webkit-keyframes #{$name}
+        @content
+    @-moz-keyframes #{$name}
+        @content
+    @-ms-keyframes #{$name}
+        @content
+    @keyframes #{$name}
+        @content
+=border-radius($value)
+    -webkit-border-radius: $value
+    -moz-border-radius: $value
+    border-radius: $value
+=box-sizing($value)
+    -webkit-box-sizing: $value
+    -moz-box-sizing: $value
+    box-sizing: $value

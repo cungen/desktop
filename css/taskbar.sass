@@ -1,0 +1,42 @@
+/*------------------------------------------------------------------
+  [ 5. taskbar .taskbar ]
+.taskbar
+    position: absolute
+    width: 100%
+    height: 50px
+    bottom: 0
+    background-color: map_get($Grey, 900)
+    z-index: 9999
+    .start
+        position: relative
+        padding: 5px
+        width: 40px
+        height: 40px
+        a
+            display: inline-block
+            width: 100%
+            height: 100%
+            text-align: center
+            &:hover
+                &:before, &:after
+                    content: ''
+                    display: block
+                    position: absolute
+                    width: 0
+                    height: 0
+                    left: 50%
+                    margin-left: -5px
+                    border-width: 5px
+                &:before
+                    top: 0
+                    border-style: solid dashed dashed dashed
+                    border-color: map_get($Black, Secondary) transparent transparent transparent
+                &:after
+                    bottom: 0
+                    border-style: dashed dashed solid dashed
+                    border-color: transparent transparent map_get($Black, Secondary) transparent
+            i
+                font-size: 35px
+                height: 40px
+                line-height: 40px
+                color: map_get($Black, Text)
