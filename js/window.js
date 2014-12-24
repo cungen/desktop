@@ -1,5 +1,16 @@
 /**
- * window event
+ * handle window z-index
+ */
+(function() {
+    // window list
+    var winList = $('.window');
+    $('.window').on('click', function() {
+        
+    });
+})();
+
+/**
+ * window movement
  */
 (function() {
     var startX = 0,

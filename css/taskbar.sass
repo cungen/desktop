@@ -3,19 +3,17 @@
 .taskbar
     position: absolute
     width: 100%
-    height: 50px
+    height: 56px
     bottom: 0
     background-color: map_get($Grey, 900)
     z-index: 9999
     .start
         position: relative
-        padding: 5px
-        width: 40px
-        height: 40px
+        width: 56px
+        height: 56px
         a
             display: inline-block
-            width: 100%
-            height: 100%
+            padding: 16px
             text-align: center
             &:hover
                 &:before, &:after
@@ -36,7 +34,10 @@
                     border-style: dashed dashed solid dashed
                     border-color: transparent transparent map_get($Black, Secondary) transparent
             i
-                font-size: 35px
-                height: 40px
-                line-height: 40px
+                font-size: 24px
+                height: 24px
+                line-height: 24px
                 color: map_get($Black, Text)
+            img
+                width: 24px
+                height: auto

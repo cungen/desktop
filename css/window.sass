@@ -11,6 +11,7 @@
     background-color: map_get($Black, Disable)
     overflow: hidden
     z-index: auto
+    +box-shadow(0 8px 16px 8px rgba(0, 0, 0, .15))
     .title-bar
         height: 32px
         background-color: map_get($theme-color, 700)
@@ -21,38 +22,41 @@
             top: 0
             right: 0
             margin: 0
-            margin-right: 4px
+            margin-right: 8px
             padding: 0
             list-style: none
-            height: 25px
+            height: 32px
             li
                 float: right
-                height: 25px
                 text-align: center
+                height: 32px
                 a
                     position: relative
                     display: block
-                    line-height: 25px
+                    margin: 4px
+                    height: 24px
+                    text-align: center
                     &:hover
                         i.max, i.min, i.close:before, i.close:after
                             border-color: map_get($Black, Text)
                     i
-                        margin: 0 6px
-                        font-size: 18px
+                        display: inline-block
+                        margin: 5px
+                        line-height: 14px
                         &.close
-                            position: relative
-                            display: inline-block
                             width: 14px
                             height: 14px
+                            position: relative
                             &:before, &:after
                                 content: ''
                                 display: block
                                 position: absolute
-                                width: 14px
+                                width: 16px
                                 height: 0
                                 top: 50%
                                 left: 0
                                 margin-left: -2px
+                                margin-top: -1px
                                 border: 1px solid map_get($Black, Secondary)
                                 +border-radius(2px)
                             &:before
@@ -60,15 +64,15 @@
                             &:after
                                 +transform(rotate(-45deg))
                         &.max
-                            display: inline-block
-                            width: 8px
-                            height: 8px
+                            width: 10px
+                            height: 9px
+                            margin-top: 6px
                             border: 2px solid map_get($Black, Secondary)
                             +border-radius(2px)
                         &.min
-                            display: inline-block
-                            width: 10px
-                            height: 0
+                            line-height: 12px
+                            margin-top: 16px
+                            width: 12px
                             border: 1px solid map_get($Black, Secondary)
                             +border-radius(1px)
     .tool-bar
