@@ -20,74 +20,30 @@
     <link rel="stylesheet" href="./css/all.css">
 </head>
 <body>
-<div class="main-container">
+<div class="wrap-container">
     <div class="taskbar">
         <div class="start">
-            <a class="menu" title="Start">
+            <a class="menu" title="Start" data-app="demos">
                 <i class="fa fa-desktop"></i>
             </a>
         </div>
-        <ul></ul>
+        <ul class="tasks">
+            <li><a><i class="fa fa-file"></i></a></li>
+            <li><a><i class="fa fa-tasks"></i></a></li>
+            <li><a><i class="fa fa-tasks"></i></a></li>
+            <li><a><i class="fa fa-tasks"></i></a></li>
+            <li><a><i class="fa fa-tasks"></i></a></li>
+        </ul>
     </div>
     <div class="desktop">
-        <ul class="desk-icons">
+        <ul class="apps">
             <li>
-                <a href="">
+                <a data-href="demos/index.html">
                     <i class="fa fa-eye"></i>
                     <span>demos</span>
                 </a>
             </li>
         </ul>
-    </div>
-    <div class="window">
-        <div class="title-bar">
-            <ul class="win-ctrl">
-                <li>
-                    <a>
-                        <i class="close"></i>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <i class="max"></i>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <i class="min"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="menu-bar"></div>
-        <div class="tool-bar"></div>
-        <div class="content"></div>
-        <div class="status-bar"></div>
-    </div>
-    <div class="window">
-        <div class="title-bar">
-            <ul class="win-ctrl">
-                <li>
-                    <a>
-                        <i class="close"></i>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <i class="max"></i>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <i class="min"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="menu-bar"></div>
-        <div class="tool-bar"></div>
-        <div class="content"></div>
-        <div class="status-bar"></div>
     </div>
 </div>
 
@@ -100,6 +56,7 @@
 <![endif]-->
 
 <script src="js/window.js"></script>
+<script src="js/desktop.js"></script>
 <script>
 
 </script>

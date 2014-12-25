@@ -24,7 +24,7 @@
 * {
   font-family: Georgia, "Times New Roman", "Microsoft YaHei", STXihei, serif; }
 
-.main-container {
+.wrap-container {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -34,10 +34,10 @@
   background-size: 100% auto;
   z-index: 1;
   overflow: hidden; }
-  .main-container a {
+  .wrap-container a {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.54); }
-    .main-container a:hover {
+    .wrap-container a:hover {
       color: rgba(255, 255, 255, 0.87); }
 
 /*------------------------------------------------------------------
@@ -61,55 +61,59 @@
     position: relative;
     width: 56px;
     height: 56px; }
-    .taskbar .start a {
+  .taskbar .tasks {
+    position: absolute;
+    left: 56px;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden; }
+    .taskbar .tasks li {
+      position: relative;
+      float: left; }
+  .taskbar a {
+    display: inline-block;
+    padding: 17px 19.5px;
+    text-align: center; }
+    .taskbar a:hover i {
+      color: #03A9F4; }
+    .taskbar a i {
       display: inline-block;
-      padding: 16px;
-      text-align: center; }
-      .taskbar .start a:hover:before, .taskbar .start a:hover:after {
-        content: "";
-        display: block;
-        position: absolute;
-        width: 0;
-        height: 0;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px; }
-      .taskbar .start a:hover:before {
-        top: 0;
-        border-style: solid dashed dashed dashed;
-        border-color: rgba(255, 255, 255, 0.54) transparent transparent transparent; }
-      .taskbar .start a:hover:after {
-        bottom: 0;
-        border-style: dashed dashed solid dashed;
-        border-color: transparent transparent rgba(255, 255, 255, 0.54) transparent; }
-      .taskbar .start a i {
-        font-size: 24px;
-        height: 24px;
-        line-height: 24px;
-        color: rgba(255, 255, 255, 0.87); }
-      .taskbar .start a img {
-        width: 24px;
-        height: auto; }
+      font-size: 22px;
+      line-height: 22px;
+      color: rgba(255, 255, 255, 0.87); }
+    .taskbar a img {
+      width: 20px;
+      height: auto; }
 
 /*------------------------------------------------------------------
  * [ 6. desktop .desktop ] */
-.desktop .desk-icons {
+.desktop .apps {
   list-style: none;
   margin: 0;
   padding: 25px; }
-  .desktop .desk-icons li {
+  .desktop .apps li {
     padding: 5px;
     display: inline-block;
     text-align: center; }
-    .desktop .desk-icons li a {
-      color: rgba(255, 255, 255, 0.54);
+    .desktop .apps li a {
+      color: rgba(255, 255, 255, 0.87);
       text-decoration: none;
-      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.26); }
-      .desktop .desk-icons li a:hover {
-        color: rgba(255, 255, 255, 0.87); }
-    .desktop .desk-icons li i {
+      text-shadow: 0 1px 2px #000000;
+      cursor: pointer;
+      -webkit-transition: text-shadow 0.3s, color 0.3s;
+      -moz-transition: text-shadow 0.3s, color 0.3s;
+      -ms-transition: text-shadow 0.3s, color 0.3s;
+      -o-transition: text-shadow 0.3s, color 0.3s;
+      transition: text-shadow 0.3s, color 0.3s; }
+      .desktop .apps li a:hover {
+        color: #03A9F4; }
+      .desktop .apps li a:active {
+        text-shadow: 0 3px 6px #000000; }
+    .desktop .apps li i {
       font-size: 40px; }
-    .desktop .desk-icons li span {
+    .desktop .apps li span {
       display: block; }
 
 /* ------------------------------------------------------------------
@@ -118,20 +122,21 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  resize: both;
   width: 600px;
   height: 400px;
   background-color: rgba(255, 255, 255, 0.26);
   overflow: hidden;
-  z-index: auto;
+  z-index: 1000;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
   -webkit-box-shadow: 0 8px 16px 8px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 8px 16px 8px rgba(0, 0, 0, 0.15);
   box-shadow: 0 8px 16px 8px rgba(0, 0, 0, 0.15); }
   .window .title-bar {
     height: 32px;
     background-color: #0288D1;
-    overflow: hidden;
-    resize: none; }
+    overflow: hidden; }
     .window .title-bar .win-ctrl {
       position: absolute;
       top: 0;
@@ -151,64 +156,63 @@
           margin: 4px;
           height: 24px;
           text-align: center; }
-          .window .title-bar .win-ctrl li a:hover i.max, .window .title-bar .win-ctrl li a:hover i.min, .window .title-bar .win-ctrl li a:hover i.close:before, .window .title-bar .win-ctrl li a:hover i.close:after {
-            border-color: rgba(255, 255, 255, 0.87); }
+          .window .title-bar .win-ctrl li a:hover.max i, .window .title-bar .win-ctrl li a:hover.min i, .window .title-bar .win-ctrl li a:hover.close i:before, .window .title-bar .win-ctrl li a:hover.close i:after {
+            border-color: #ffffff; }
           .window .title-bar .win-ctrl li a i {
             display: inline-block;
             margin: 5px;
             line-height: 14px; }
-            .window .title-bar .win-ctrl li a i.close {
+          .window .title-bar .win-ctrl li a.close i {
+            width: 14px;
+            height: 14px;
+            position: relative; }
+            .window .title-bar .win-ctrl li a.close i:before, .window .title-bar .win-ctrl li a.close i:after {
+              content: "";
+              display: block;
+              position: absolute;
               width: 14px;
-              height: 14px;
-              position: relative; }
-              .window .title-bar .win-ctrl li a i.close:before, .window .title-bar .win-ctrl li a i.close:after {
-                content: "";
-                display: block;
-                position: absolute;
-                width: 16px;
-                height: 0;
-                top: 50%;
-                left: 0;
-                margin-left: -2px;
-                margin-top: -1px;
-                border: 1px solid rgba(255, 255, 255, 0.54);
-                -webkit-border-radius: 2px;
-                -moz-border-radius: 2px;
-                border-radius: 2px; }
-              .window .title-bar .win-ctrl li a i.close:before {
-                -webkit-transform: rotate(45deg);
-                -moz-transform: rotate(45deg);
-                -ms-transform: rotate(45deg);
-                -o-transform: rotate(45deg);
-                transform: rotate(45deg); }
-              .window .title-bar .win-ctrl li a i.close:after {
-                -webkit-transform: rotate(-45deg);
-                -moz-transform: rotate(-45deg);
-                -ms-transform: rotate(-45deg);
-                -o-transform: rotate(-45deg);
-                transform: rotate(-45deg); }
-            .window .title-bar .win-ctrl li a i.max {
-              width: 10px;
-              height: 9px;
-              margin-top: 6px;
-              border: 2px solid rgba(255, 255, 255, 0.54);
-              -webkit-border-radius: 2px;
-              -moz-border-radius: 2px;
-              border-radius: 2px; }
-            .window .title-bar .win-ctrl li a i.min {
-              line-height: 12px;
-              margin-top: 16px;
-              width: 12px;
-              border: 1px solid rgba(255, 255, 255, 0.54);
-              -webkit-border-radius: 1px;
-              -moz-border-radius: 1px;
-              border-radius: 1px; }
+              height: 0;
+              top: 50%;
+              left: 0;
+              margin-left: -1px;
+              margin-top: -1px;
+              border: 1px solid rgba(255, 255, 255, 0.54); }
+            .window .title-bar .win-ctrl li a.close i:before {
+              -webkit-transform: rotate(45deg);
+              -moz-transform: rotate(45deg);
+              -ms-transform: rotate(45deg);
+              -o-transform: rotate(45deg);
+              transform: rotate(45deg); }
+            .window .title-bar .win-ctrl li a.close i:after {
+              -webkit-transform: rotate(-45deg);
+              -moz-transform: rotate(-45deg);
+              -ms-transform: rotate(-45deg);
+              -o-transform: rotate(-45deg);
+              transform: rotate(-45deg); }
+          .window .title-bar .win-ctrl li a.max i {
+            width: 10px;
+            height: 9px;
+            margin-top: 6px;
+            border: 2px solid rgba(255, 255, 255, 0.54); }
+          .window .title-bar .win-ctrl li a.min i {
+            line-height: 12px;
+            margin-top: 16px;
+            width: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.54); }
   .window .tool-bar {
     height: 50px;
     background-color: #03A9F4; }
   .window .content {
+    position: absolute;
+    box-sizing: border-box;
     width: 100%;
+    padding-top: 82px;
+    margin-top: -82px;
     height: 100%;
+    z-index: -1;
     background-color: rgba(255, 255, 255, 0.87); }
+  .window iframe {
+    width: 100%;
+    height: 100%; }
 
 /*# sourceMappingURL=all.css.map */

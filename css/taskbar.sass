@@ -11,33 +11,29 @@
         position: relative
         width: 56px
         height: 56px
-        a
-            display: inline-block
-            padding: 16px
-            text-align: center
-            &:hover
-                &:before, &:after
-                    content: ''
-                    display: block
-                    position: absolute
-                    width: 0
-                    height: 0
-                    left: 50%
-                    margin-left: -5px
-                    border-width: 5px
-                &:before
-                    top: 0
-                    border-style: solid dashed dashed dashed
-                    border-color: map_get($Black, Secondary) transparent transparent transparent
-                &:after
-                    bottom: 0
-                    border-style: dashed dashed solid dashed
-                    border-color: transparent transparent map_get($Black, Secondary) transparent
+    .tasks
+        position: absolute
+        left: 56px
+        bottom: 0
+        margin: 0
+        padding: 0
+        list-style: none
+        overflow: hidden
+        li
+            position: relative
+            float: left
+    a
+        display: inline-block
+        padding: 17px 19.5px
+        text-align: center
+        &:hover
             i
-                font-size: 24px
-                height: 24px
-                line-height: 24px
-                color: map_get($Black, Text)
-            img
-                width: 24px
-                height: auto
+                color: map_get($LightBlue, 500)
+        i
+            display: inline-block
+            font-size: 22px
+            line-height: 22px
+            color: map_get($Black, Text)
+        img
+            width: 20px
+            height: auto
