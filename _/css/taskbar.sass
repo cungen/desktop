@@ -7,14 +7,38 @@
     bottom: 0
     background-color: map_get($Grey, 900)
     z-index: 9999
-    overflow: hidden
     .start
         position: relative
         width: 56px
         height: 56px
+    .multi-window
+        position: absolute
+        bottom: 60px
+        margin: 0
+        padding: 8px 0
+        list-style: none
+        overflow: hidden
+        background-color: map_get($Black, Text)
+        +border-radius(2px)
+        +box-shadow(0 8px 16px 8px rgba(0, 0, 0, .15))
+        li
+            height: 32px
+            width: 168px
+            a
+                text-align: left
+                padding: 0
+                display: block
+                padding-left: 16px
+                line-height: 32px
+                color: map_get($White, Text)
+                cursor: pointer
+                &:hover
+                    color: map_get($Black, Text)
+                    background-color: map_get($theme-color, 500)
     .tasks
         position: absolute
         left: 56px
+        height: 56px
         bottom: 0
         margin: 0
         padding: 0
@@ -32,6 +56,7 @@
         display: inline-block
         padding: 17px 19.5px
         text-align: center
+        cursor: pointer
         &:hover
             i
                 color: map_get($theme-color, 300)

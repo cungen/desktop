@@ -56,15 +56,43 @@
   height: 56px;
   bottom: 0;
   background-color: #212121;
-  z-index: 9999;
-  overflow: hidden; }
+  z-index: 9999; }
   .taskbar .start {
     position: relative;
     width: 56px;
     height: 56px; }
+  .taskbar .multi-window {
+    position: absolute;
+    bottom: 60px;
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.87);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 8px 16px 8px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 8px 16px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 16px 8px rgba(0, 0, 0, 0.15); }
+    .taskbar .multi-window li {
+      height: 32px;
+      width: 168px; }
+      .taskbar .multi-window li a {
+        text-align: left;
+        padding: 0;
+        display: block;
+        padding-left: 16px;
+        line-height: 32px;
+        color: #000000;
+        cursor: pointer; }
+        .taskbar .multi-window li a:hover {
+          color: rgba(255, 255, 255, 0.87);
+          background-color: #03A9F4; }
   .taskbar .tasks {
     position: absolute;
     left: 56px;
+    height: 56px;
     bottom: 0;
     margin: 0;
     padding: 0;
@@ -85,7 +113,8 @@
   .taskbar a {
     display: inline-block;
     padding: 17px 19.5px;
-    text-align: center; }
+    text-align: center;
+    cursor: pointer; }
     .taskbar a:hover i {
       color: #4FC3F7; }
     .taskbar a i {

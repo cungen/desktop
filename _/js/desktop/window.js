@@ -169,16 +169,28 @@
                 x,
                 y,
                 windowData = winObj.data('window');
-            posInfo = {
-                width: winObj.width(),
-                height: winObj.height(),
-                x: winObj.position().left,
-                y: winObj.position().top
-            };
-            windowData.posInfo = posInfo;
-            x = $('.taskbar .tasks li.' + windowData.appName).position().left + 56;
-            y = winObj.parent().height() - 28;
-            windowData.mined = true;
+
+            if (windowData.mined) {
+                // already mined
+                posInfo = windowData.posInfo;
+                width = posInfo.width;
+                height = posInfo.height;
+                x = posInfo.x;
+                y = posInfo.y;
+                windowData.mined = false;
+                winObj.data('window', windowData);
+            } else {
+                posInfo = {
+                    width: winObj.width(),
+                    height: winObj.height(),
+                    x: winObj.position().left,
+                    y: winObj.position().top
+                };
+                windowData.posInfo = posInfo;
+                x = $('.taskbar .tasks li.' + windowData.appName).position().left + 56;
+                y = winObj.parent().height() - 28;
+                windowData.mined = true;
+            }
             winObj.animate({
                 width: 0,
                 height: 0,

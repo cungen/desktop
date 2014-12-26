@@ -13,7 +13,8 @@
 
             return this.each(function() {
                 var $this = $(this);
-                $this.delegate('li a', 'click', function() {
+
+                $this.delegate('.tasks li a', 'click', function() {
                     var appName = $(this).parent().attr('class').replace('active', '').trim();
                     if (appName) {
                         var windowList = taskList[appName];
@@ -23,6 +24,25 @@
                         $this.find('.tasks li.active').removeClass('active');
                         $this.find('.tasks li.' + appName.trim()).addClass('active');
                     }
+                });
+
+                $this.delegate('.tasks li a', 'mouseenter', function() {
+                    var appName = $(this).parent().attr('class').replace('active', '').trim(),
+                        left = $(this).parent().position().left + 56;
+                    $this
+                        .find('.multi-window')
+                        .html('<li class="' + appName + '"><a>' + appName + '</a></li>')
+                        .animate({
+                            left: left
+                        }, 300);
+                }).delegate('.tasks li a', 'mouseleave', function() {
+                    $this.find('.multi-window').on('mouseleave', function() {
+                        $this.find('.multi-window').html('');
+                    });
+                });
+
+                $this.delegate('.multi-window li a', 'click', function() {
+                    Log($(this).parent().attr('class'));
                 });
             });
         },
