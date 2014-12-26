@@ -56,7 +56,8 @@
   height: 56px;
   bottom: 0;
   background-color: #212121;
-  z-index: 9999; }
+  z-index: 9999;
+  overflow: hidden; }
   .taskbar .start {
     position: relative;
     width: 56px;
@@ -71,13 +72,22 @@
     overflow: hidden; }
     .taskbar .tasks li {
       position: relative;
-      float: left; }
+      float: left;
+      -webkit-transition: background-color 300ms;
+      -moz-transition: background-color 300ms;
+      -ms-transition: background-color 300ms;
+      -o-transition: background-color 300ms;
+      transition: background-color 300ms; }
+      .taskbar .tasks li.active {
+        background-color: rgba(255, 255, 255, 0.26); }
+        .taskbar .tasks li.active i {
+          color: #4FC3F7; }
   .taskbar a {
     display: inline-block;
     padding: 17px 19.5px;
     text-align: center; }
     .taskbar a:hover i {
-      color: #03A9F4; }
+      color: #4FC3F7; }
     .taskbar a i {
       display: inline-block;
       font-size: 22px;
@@ -91,9 +101,10 @@
  * [ 6. desktop .desktop ] */
 .desktop .apps {
   list-style: none;
-  margin: 0;
   padding: 25px; }
   .desktop .apps li {
+    margin-right: 15px;
+    margin-bottom: 20px;
     padding: 5px;
     display: inline-block;
     text-align: center; }
@@ -120,10 +131,6 @@
  * [ 7. window .window ] */
 .window {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 600px;
-  height: 400px;
   background-color: rgba(255, 255, 255, 0.26);
   overflow: hidden;
   z-index: 1000;

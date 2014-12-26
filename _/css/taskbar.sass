@@ -7,6 +7,7 @@
     bottom: 0
     background-color: map_get($Grey, 900)
     z-index: 9999
+    overflow: hidden
     .start
         position: relative
         width: 56px
@@ -22,13 +23,18 @@
         li
             position: relative
             float: left
+            +transition(background-color 300ms)
+            &.active
+                background-color: map_get($Black, Disable)
+                i
+                    color: map_get($theme-color, 300)
     a
         display: inline-block
         padding: 17px 19.5px
         text-align: center
         &:hover
             i
-                color: map_get($LightBlue, 500)
+                color: map_get($theme-color, 300)
         i
             display: inline-block
             font-size: 22px

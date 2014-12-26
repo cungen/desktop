@@ -1,5 +1,5 @@
 {
-  "name": "svg-editor",
+  "name": "web-desktop",
   "version": "0.0.0",
   "authors": [
     "cungen"
@@ -15,6 +15,7 @@
     "lodash": "~2.4.1",
     "html5shiv": "~3.7.2",
     "respond": "~1.4.2",
-    "jquery": "<2.0"
+    "jquery": "<2.0",
+    "requirejs": "~2.1.15"
   }
 }

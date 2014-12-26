@@ -1,0 +1,24 @@
+extends ./_/views/_layout/base
+block script
+    script(src='./_/js/utils/log.js')
+    script(src='./_/js/desktop/taskbar.js')
+    script(src='./_/js/desktop/window.js')
+    script(src='./_/js/desktop/desktop.js')
+    script(src='./_/js/controllers/DesktopController.js')
+block content
+    .wrap-container
+        .taskbar(ng-controller='DesktopController')
+            .start
+                a.menu(title='Start', data-app='demos')
+                    i.fa.fa-desktop
+            ul.tasks
+        .desktop
+            ul.apps
+                li
+                    a(data-href='demos/index.html', data-name='Demos')
+                        i.fa.fa-eye
+                        span Demos
+                li
+                    a(data-href='', data-name='Todo')
+                        i.fa.fa-tasks
+                        span Todo
