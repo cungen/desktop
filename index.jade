@@ -10,16 +10,20 @@ block content
         .taskbar(ng-controller='DesktopController')
             .start
                 a.menu(title='Start', data-app='demos')
-                    i.fa.fa-desktop
+                    img.shadowed(src='./_/imgs/icons/icon-home.png')
             ul.tasks
             ul.multi-window
         .desktop
             ul.apps
                 li
-                    a(data-href='demos/index.html', data-name='Demos')
-                        i.fa.fa-eye
-                        span Demos
+                    a(data-href='http://iamroot.cn', data-name='Blog')
+                        img.shadowed(src='./_/imgs/icons/icon-blog.png')
+                        span Blog
                 li
-                    a(data-href='', data-name='Todo')
-                        i.fa.fa-tasks
+                    a(data-href='demos/index.html', data-name='Todo')
+                        img.shadowed(src='./_/imgs/icons/icon-todo.png')
                         span Todo
+                li
+                    a(data-href='demos/index.html', data-name='threejs')
+                        i.fa.fa-paper-plane-o
+                        span three.js

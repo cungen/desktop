@@ -3,6 +3,8 @@
 
 .desktop
     .apps
+        margin-top: 0
+        margin-bottom: 10px
         list-style: none
         padding: 25px
         li
@@ -12,17 +14,36 @@
             display: inline-block
             text-align: center
             a
+                width: 60px
+                position: relative
+                display: block
                 color: map_get($Black, Text)
                 text-decoration: none
-                text-shadow: 0 1px 2px map_get($White, Text)
+                text-shadow: 0 2px 1px map_get($White, Text)
                 cursor: pointer
                 +transition((text-shadow .3s, color .3s))
                 &:hover
-                    color: map_get($theme-color, 500)
+                    color: map_get($Black, 100)
+                    span
+                        text-overflow: ellipsis
+                        white-space: normal
                 &:active
-                    text-shadow: 0 3px 6px map_get($White, Text)
+                    text-shadow: 0 6px 3px map_get($White, Text)
             i
-                font-size: 40px
+                font-size: 35px
+                line-height: 55px
+                height: 55px
+            img
+                vertical-align: middle
+                width: 51px
+                height: 51px
             span
+                font-size: 16px
+                line-height: 16px
                 display: block
-
+                text-align: center
+                width: 60px
+                height: 3.8em
+                text-overflow: ellipsis
+                white-space: nowrap
+                overflow: hidden

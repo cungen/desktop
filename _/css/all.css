@@ -40,6 +40,15 @@
     .wrap-container a:hover {
       color: rgba(255, 255, 255, 0.87); }
 
+.shadowed {
+  transition: all 200ms;
+  filter: url("data:image/svg+xml;utf8,<svg height='0' xmlns='http://www.w3.org/2000/svg'><filter id='drop-shadow'><feGaussianBlur in='SourceAlpha' stdDeviation='4'/><feOffset dx='0' dy='2' result='offsetblur'/><feFlood flood-color='rgba(0,0,0,0.5)'/><feComposite in2='offsetblur' operator='in'/><feMerge><feMergeNode/><feMergeNode in='SourceGraphic'/></feMerge></filter></svg>#drop-shadow");
+  -webkit-filter: drop-shadow(0px 2px 1px rgba(0, 0, 0, 0.5)); }
+
+a:active.shadowed, a:active .shadowed {
+  filter: url("data:image/svg+xml;utf8,<svg height='0' xmlns='http://www.w3.org/2000/svg'><filter id='drop-shadow'><feGaussianBlur in='SourceAlpha' stdDeviation='4'/><feOffset dx='0' dy='6' result='offsetblur'/><feFlood flood-color='rgba(0,0,0,0.5)'/><feComposite in2='offsetblur' operator='in'/><feMerge><feMergeNode/><feMergeNode in='SourceGraphic'/></feMerge></filter></svg>#drop-shadow");
+  -webkit-filter: drop-shadow(0px 6px 3px rgba(0, 0, 0, 0.5)); }
+
 /*------------------------------------------------------------------
  * [ 4. utils ] */
 .text-center {
@@ -59,7 +68,7 @@
   z-index: 9999; }
   .taskbar .start {
     position: relative;
-    width: 56px;
+    width: 60px;
     height: 56px; }
   .taskbar .multi-window {
     position: absolute;
@@ -81,9 +90,11 @@
       .taskbar .multi-window li a {
         text-align: left;
         padding: 0;
+        width: auto;
         display: block;
         padding-left: 16px;
         line-height: 32px;
+        height: auto;
         color: #000000;
         cursor: pointer; }
         .taskbar .multi-window li a:hover {
@@ -91,7 +102,7 @@
           background-color: #03A9F4; }
   .taskbar .tasks {
     position: absolute;
-    left: 56px;
+    left: 60px;
     height: 56px;
     bottom: 0;
     margin: 0;
@@ -106,13 +117,11 @@
       -ms-transition: background-color 300ms;
       -o-transition: background-color 300ms;
       transition: background-color 300ms; }
-      .taskbar .tasks li.active {
-        background-color: rgba(255, 255, 255, 0.26); }
-        .taskbar .tasks li.active i {
-          color: #4FC3F7; }
   .taskbar a {
     display: inline-block;
-    padding: 17px 19.5px;
+    width: 60px;
+    height: 56px;
+    line-height: 56px;
     text-align: center;
     cursor: pointer; }
     .taskbar a:hover i {
@@ -120,15 +129,19 @@
     .taskbar a i {
       display: inline-block;
       font-size: 22px;
-      line-height: 22px;
+      line-height: 56px;
       color: rgba(255, 255, 255, 0.87); }
     .taskbar a img {
-      width: 20px;
-      height: auto; }
+      width: 32px;
+      line-height: 56px;
+      height: auto;
+      vertical-align: middle; }
 
 /*------------------------------------------------------------------
  * [ 6. desktop .desktop ] */
 .desktop .apps {
+  margin-top: 0;
+  margin-bottom: 10px;
   list-style: none;
   padding: 25px; }
   .desktop .apps li {
@@ -138,9 +151,12 @@
     display: inline-block;
     text-align: center; }
     .desktop .apps li a {
+      width: 60px;
+      position: relative;
+      display: block;
       color: rgba(255, 255, 255, 0.87);
       text-decoration: none;
-      text-shadow: 0 1px 2px #000000;
+      text-shadow: 0 2px 1px #000000;
       cursor: pointer;
       -webkit-transition: text-shadow 0.3s, color 0.3s;
       -moz-transition: text-shadow 0.3s, color 0.3s;
@@ -148,13 +164,30 @@
       -o-transition: text-shadow 0.3s, color 0.3s;
       transition: text-shadow 0.3s, color 0.3s; }
       .desktop .apps li a:hover {
-        color: #03A9F4; }
+        color: #ffffff; }
+        .desktop .apps li a:hover span {
+          text-overflow: ellipsis;
+          white-space: normal; }
       .desktop .apps li a:active {
-        text-shadow: 0 3px 6px #000000; }
+        text-shadow: 0 6px 3px #000000; }
     .desktop .apps li i {
-      font-size: 40px; }
+      font-size: 35px;
+      line-height: 55px;
+      height: 55px; }
+    .desktop .apps li img {
+      vertical-align: middle;
+      width: 51px;
+      height: 51px; }
     .desktop .apps li span {
-      display: block; }
+      font-size: 16px;
+      line-height: 16px;
+      display: block;
+      text-align: center;
+      width: 60px;
+      height: 3.8em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden; }
 
 /* ------------------------------------------------------------------
  * [ 7. window .window ] */
@@ -197,34 +230,37 @@
           .window .title-bar .win-ctrl li a i {
             display: inline-block;
             margin: 5px;
-            line-height: 14px; }
-          .window .title-bar .win-ctrl li a.close i {
-            width: 14px;
-            height: 14px;
-            position: relative; }
-            .window .title-bar .win-ctrl li a.close i:before, .window .title-bar .win-ctrl li a.close i:after {
-              content: "";
-              display: block;
-              position: absolute;
+            line-height: 14px;
+            box-sizing: content-box; }
+          .window .title-bar .win-ctrl li a.close {
+            opacity: 1; }
+            .window .title-bar .win-ctrl li a.close i {
               width: 14px;
-              height: 0;
-              top: 50%;
-              left: 0;
-              margin-left: -1px;
-              margin-top: -1px;
-              border: 1px solid rgba(255, 255, 255, 0.54); }
-            .window .title-bar .win-ctrl li a.close i:before {
-              -webkit-transform: rotate(45deg);
-              -moz-transform: rotate(45deg);
-              -ms-transform: rotate(45deg);
-              -o-transform: rotate(45deg);
-              transform: rotate(45deg); }
-            .window .title-bar .win-ctrl li a.close i:after {
-              -webkit-transform: rotate(-45deg);
-              -moz-transform: rotate(-45deg);
-              -ms-transform: rotate(-45deg);
-              -o-transform: rotate(-45deg);
-              transform: rotate(-45deg); }
+              height: 14px;
+              position: relative; }
+              .window .title-bar .win-ctrl li a.close i:before, .window .title-bar .win-ctrl li a.close i:after {
+                content: "";
+                display: block;
+                position: absolute;
+                width: 14px;
+                height: 0;
+                top: 50%;
+                left: 0;
+                margin-left: -1px;
+                margin-top: -1px;
+                border: 1px solid rgba(255, 255, 255, 0.54); }
+              .window .title-bar .win-ctrl li a.close i:before {
+                -webkit-transform: rotate(45deg);
+                -moz-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                -o-transform: rotate(45deg);
+                transform: rotate(45deg); }
+              .window .title-bar .win-ctrl li a.close i:after {
+                -webkit-transform: rotate(-45deg);
+                -moz-transform: rotate(-45deg);
+                -ms-transform: rotate(-45deg);
+                -o-transform: rotate(-45deg);
+                transform: rotate(-45deg); }
           .window .title-bar .win-ctrl li a.max i {
             width: 10px;
             height: 9px;
@@ -236,14 +272,21 @@
             width: 12px;
             border: 1px solid rgba(255, 255, 255, 0.54); }
   .window .tool-bar {
-    height: 50px;
-    background-color: #03A9F4; }
+    height: 64px;
+    background-color: #03A9F4;
+    overflow: hidden;
+    padding-left: 16px; }
+    .window .tool-bar h1.page-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 64px;
+      color: rgba(255, 255, 255, 0.87); }
   .window .content {
     position: absolute;
     box-sizing: border-box;
     width: 100%;
-    padding-top: 82px;
-    margin-top: -82px;
+    padding-top: 96px;
+    margin-top: -96px;
     height: 100%;
     z-index: -1;
     background-color: rgba(255, 255, 255, 0.87); }

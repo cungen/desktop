@@ -18,3 +18,12 @@
         color: map_get($Black, Secondary)
         &:hover
             color: map_get($Black, Text)
+
+.shadowed
+    transition: all 200ms
+    filter: url("data:image/svg+xml;utf8,<svg height='0' xmlns='http://www.w3.org/2000/svg'><filter id='drop-shadow'><feGaussianBlur in='SourceAlpha' stdDeviation='4'/><feOffset dx='0' dy='2' result='offsetblur'/><feFlood flood-color='rgba(0,0,0,0.5)'/><feComposite in2='offsetblur' operator='in'/><feMerge><feMergeNode/><feMergeNode in='SourceGraphic'/></feMerge></filter></svg>#drop-shadow")
+    -webkit-filter: drop-shadow(0px 2px 1px rgba(0, 0, 0, .5))
+a:active
+    &.shadowed, .shadowed
+        filter: url("data:image/svg+xml;utf8,<svg height='0' xmlns='http://www.w3.org/2000/svg'><filter id='drop-shadow'><feGaussianBlur in='SourceAlpha' stdDeviation='4'/><feOffset dx='0' dy='6' result='offsetblur'/><feFlood flood-color='rgba(0,0,0,0.5)'/><feComposite in2='offsetblur' operator='in'/><feMerge><feMergeNode/><feMergeNode in='SourceGraphic'/></feMerge></filter></svg>#drop-shadow")
+        -webkit-filter: drop-shadow(0px 6px 3px rgba(0, 0, 0, .5))

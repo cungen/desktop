@@ -9,7 +9,7 @@
     z-index: 9999
     .start
         position: relative
-        width: 56px
+        width: 60px
         height: 56px
     .multi-window
         position: absolute
@@ -27,9 +27,11 @@
             a
                 text-align: left
                 padding: 0
+                width: auto
                 display: block
                 padding-left: 16px
                 line-height: 32px
+                height: auto
                 color: map_get($White, Text)
                 cursor: pointer
                 &:hover
@@ -37,7 +39,7 @@
                     background-color: map_get($theme-color, 500)
     .tasks
         position: absolute
-        left: 56px
+        left: 60px
         height: 56px
         bottom: 0
         margin: 0
@@ -48,13 +50,11 @@
             position: relative
             float: left
             +transition(background-color 300ms)
-            &.active
-                background-color: map_get($Black, Disable)
-                i
-                    color: map_get($theme-color, 300)
     a
         display: inline-block
-        padding: 17px 19.5px
+        width: 60px
+        height: 56px
+        line-height: 56px
         text-align: center
         cursor: pointer
         &:hover
@@ -63,8 +63,10 @@
         i
             display: inline-block
             font-size: 22px
-            line-height: 22px
+            line-height: 56px
             color: map_get($Black, Text)
         img
-            width: 20px
+            width: 32px
+            line-height: 56px
             height: auto
+            vertical-align: middle

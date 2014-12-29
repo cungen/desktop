@@ -46,7 +46,7 @@
                             if (windowList) {
                                 windowList.windows[0].window('active');
                             }
-                            $this.find('.multi-window').html('');
+                            $this.find('.multi-window').hide();
                         }
                         $this.find('.tasks li.active').removeClass('active');
                         $this.find('.tasks li.' + appName.trim()).addClass('active');
@@ -82,7 +82,7 @@
                     if (hasShowMulWin) {
                         clearTimeout(tout);
                         tout = window.setTimeout(function() {
-                            $this.find('.multi-window').html('');
+                            $this.find('.multi-window').hide();
                             hasShowMulWin = false;
                         }, 800);
                     }
@@ -95,7 +95,7 @@
                 $this.delegate('.multi-window', 'mouseleave', function() {
                     clearTimeout(tout);
                     tout = window.setTimeout(function() {
-                        $this.find('.multi-window').html('');
+                        $this.find('.multi-window').hide();
                         hasShowMulWin = false;
                     }, 800);
                 });
@@ -110,13 +110,20 @@
         addWindow: function(win) {
             var appName = $(win).data('window').appName,
                 icon = $(win).data('window').icon;
+                img = $(win).data('window').img;
             if (!taskList[appName]) {
                 taskList[appName] = {
                     windows: [],
                     icon: icon,
+                    img: img,
                     appName: appName
                 };
-                $('<li class="' + appName + '"><a><i class="fa ' + icon + '"></i></a></li>').appendTo($(this).find('.tasks'));
+                if (icon != 'img') {
+                    $('<li class="' + appName + '"><a><i class="fa ' + icon + '"></i></a></li>').appendTo($(this).find('.tasks'));
+                } else {
+                    $('<li class="' + appName + '"><a><img class="shadowed" src="' + img + '"></img></a></li>').appendTo($(this).find('.tasks'));
+                }
+
             }
             if (taskList[appName].windows.indexOf(win) === -1) {
                 taskList[appName].windows.push(win);

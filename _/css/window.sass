@@ -38,7 +38,9 @@
                         display: inline-block
                         margin: 5px
                         line-height: 14px
+                        box-sizing: content-box
                     &.close
+                        opacity: 1
                         i
                             width: 14px
                             height: 14px
@@ -71,14 +73,21 @@
                             width: 12px
                             border: 1px solid map_get($Black, Secondary)
     .tool-bar
-        height: 50px
+        height: 64px
         background-color: map_get($theme-color, 500)
+        overflow: hidden
+        padding-left: 16px
+        h1.page-title
+            margin: 0
+            font-size: 20px
+            line-height: 64px
+            color: map_get($Black, Text)
     .content
         position: absolute
         box-sizing: border-box
         width: 100%
-        padding-top: 82px
-        margin-top: -82px
+        padding-top: 96px
+        margin-top: -96px
         height: 100%
         z-index: -1
         background-color: map_get($Black, Text)

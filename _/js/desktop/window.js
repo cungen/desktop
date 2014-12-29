@@ -8,9 +8,17 @@
         options.control.indexOf('max') > -1 ? childHTML += '<li><a class="max"><i></i></a></li>' : null;
         options.control.indexOf('min') > -1 ? childHTML += '<li><a class="min"><i></i></a></li>' : null;
         childHTML += '</ul></div>';
-        childHTML += '<div class="tool-bar">' + (options.toolBar ? options.toolBar : '') + '</div>';
+        childHTML += '<div class="tool-bar">' +
+            '<h1 class="page-title">' + options.appName + '</h1>' +
+            '' + (options.toolBar ? options.toolBar : '') + '</div>';
         childHTML += '<div class="menu-bar">' + (options.menuBar ? options.menuBar : '') + '</div>';
-        childHTML += '<div class="content">' + (options.content ? options.content : '') + '</div>';
+        childHTML += '<div class="content">';
+        if (options.url) {
+            childHTML += '<iframe src="' + options.url + '" frameborder="0"></iframe></div>';
+        } else {
+            childHTML += (options.content ? options.content : '') + '</div>';
+        }
+
         childHTML += '<div class="status-bar">' + (options.statusBar ? options.statusBar : '') + '</div>';
         return childHTML;
     }
@@ -23,6 +31,8 @@
                 debug: true,
                 appName: 'application',
                 icon: 'fa-file-o',
+                url: '',
+                img: '',
                 control: ['close', 'max', 'min'],
                 confirm: '', // confirm function
                 toolBar: '', // toolBar content
@@ -51,7 +61,8 @@
                 if (!$this.data('window')) {
                     $this.data('window', {
                         appName: settings.appName,
-                        icon: settings.icon
+                        icon: settings.icon,
+                        img: settings.img
                     });
                 }
                 // init position info
@@ -215,7 +226,6 @@
 
                 // update task bar activate
                 if (winList.length > 0) {
-                    Log($(winList[winList.length - 1]).data('window'));
                     $('.taskbar').taskbar('active', $(winList[winList.length - 1]));
                 }
             }, 300);
