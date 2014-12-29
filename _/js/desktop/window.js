@@ -106,20 +106,20 @@
         active: function($this) {
             var winObj = $this ? $this : this;
             var i = winList.indexOf(winObj.toArray()[0]);
-            if (i == -1) {
-                // don't exist
-                winList.push(winObj.toArray()[0]);
-            } else {
-                // do exist
-                winList.splice(i, 1);
-                winList.push(winObj.toArray()[0]);
-            }
+
+            winList.splice(i, 1);
+            winList.push(winObj.toArray()[0]);
 
             $(winList).each(function(index) {
                 $(this).css({
                     'z-index': index
                 });
             });
+
+            var windowData = winObj.data('window');
+            if (windowData.mined) {
+                winObj.window('min');
+            }
         },
 
         max: function($this) {
@@ -169,16 +169,17 @@
                 x,
                 y,
                 windowData = winObj.data('window');
-
             if (windowData.mined) {
                 // already mined
                 posInfo = windowData.posInfo;
-                width = posInfo.width;
-                height = posInfo.height;
-                x = posInfo.x;
-                y = posInfo.y;
                 windowData.mined = false;
                 winObj.data('window', windowData);
+                winObj.animate({
+                    width: posInfo.width,
+                    height: posInfo.height,
+                    left: posInfo.x,
+                    top: posInfo.y
+                }, 300);
             } else {
                 posInfo = {
                     width: winObj.width(),
@@ -190,13 +191,13 @@
                 x = $('.taskbar .tasks li.' + windowData.appName).position().left + 56;
                 y = winObj.parent().height() - 28;
                 windowData.mined = true;
+                winObj.animate({
+                    width: 0,
+                    height: 0,
+                    left: x,
+                    top: y
+                }, 300);
             }
-            winObj.animate({
-                width: 0,
-                height: 0,
-                left: x,
-                top: y
-            }, 300);
             winObj.data('window', windowData);
         },
         close: function($this) {

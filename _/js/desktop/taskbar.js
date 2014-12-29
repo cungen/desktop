@@ -3,7 +3,9 @@
  */
 ;(function($, window, document, undefined) {
 
-    var taskList = {};
+    var taskList = {},
+        tout, // timeout stamp
+        hasShowMulWin; // whether the multi window is shown;
 
     var methods = {
         init: function(options) {
@@ -18,8 +20,33 @@
                     var appName = $(this).parent().attr('class').replace('active', '').trim();
                     if (appName) {
                         var windowList = taskList[appName];
-                        if (windowList) {
-                            windowList.windows[0].window('active');
+
+                        clearTimeout(tout);
+                        if(taskList[appName].windows.length > 1) {
+                            var delay = 0;
+                            if (hasShowMulWin) {
+                                delay = 300;
+                            }
+                            var multiHTML = '';
+                            for (var i = 0; i < taskList[appName].windows.length; i++) {
+                                if (taskList[appName].windows.length > 1) {
+                                    multiHTML += '<li class="' + appName + '"><a>' + appName + ' ' + (i + 1) + '</a></li>';
+                                } else {
+                                    multiHTML += '<li class="' + appName + '"><a>' + appName + '</a></li>';
+                                }
+                            }
+                            $this
+                                .find('.multi-window')
+                                .html(multiHTML)
+                                .animate({
+                                    left: $(this).parent().position().left + 56
+                                }, delay);
+                            hasShowMulWin = true;
+                        } else {
+                            if (windowList) {
+                                windowList.windows[0].window('active');
+                            }
+                            $this.find('.multi-window').html('');
                         }
                         $this.find('.tasks li.active').removeClass('active');
                         $this.find('.tasks li.' + appName.trim()).addClass('active');
@@ -29,20 +56,54 @@
                 $this.delegate('.tasks li a', 'mouseenter', function() {
                     var appName = $(this).parent().attr('class').replace('active', '').trim(),
                         left = $(this).parent().position().left + 56;
-                    $this
-                        .find('.multi-window')
-                        .html('<li class="' + appName + '"><a>' + appName + '</a></li>')
-                        .animate({
-                            left: left
-                        }, 300);
+                    clearTimeout(tout);
+                    tout = window.setTimeout(function() {
+                        var delay = 0;
+                        if (hasShowMulWin) {
+                            delay = 300;
+                        }
+                        var multiHTML = '';
+                        for (var i = 0; i < taskList[appName].windows.length; i++) {
+                            if (taskList[appName].windows.length > 1) {
+                                multiHTML += '<li class="' + appName + '"><a>' + appName + ' ' + (i + 1) + '</a></li>';
+                            } else {
+                                multiHTML += '<li class="' + appName + '"><a>' + appName + '</a></li>';
+                            }
+                        }
+                        $this
+                            .find('.multi-window')
+                            .html(multiHTML)
+                            .animate({
+                                left: left
+                            }, delay);
+                        hasShowMulWin = true;
+                    }, 500);
                 }).delegate('.tasks li a', 'mouseleave', function() {
-                    $this.find('.multi-window').on('mouseleave', function() {
-                        $this.find('.multi-window').html('');
-                    });
+                    if (hasShowMulWin) {
+                        clearTimeout(tout);
+                        tout = window.setTimeout(function() {
+                            $this.find('.multi-window').html('');
+                            hasShowMulWin = false;
+                        }, 800);
+                    }
                 });
 
-                $this.delegate('.multi-window li a', 'click', function() {
-                    Log($(this).parent().attr('class'));
+                $this.delegate('.multi-window', 'mouseenter', function() {
+                    clearTimeout(tout);
+                });
+
+                $this.delegate('.multi-window', 'mouseleave', function() {
+                    clearTimeout(tout);
+                    tout = window.setTimeout(function() {
+                        $this.find('.multi-window').html('');
+                        hasShowMulWin = false;
+                    }, 800);
+                });
+
+                $this.delegate('.multi-window li a', 'click', function(event) {
+                    var appName = $(this).parent().attr('class'),
+                        index = $(this).parent().index();
+                    taskList[appName].windows[index].window('active');
                 });
             });
         },
