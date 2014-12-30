@@ -196,15 +196,12 @@ a:active.shadowed, a:active .shadowed {
   background-color: rgba(255, 255, 255, 0.26);
   overflow: hidden;
   z-index: 1000;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
   -webkit-box-shadow: 0 8px 16px 8px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 8px 16px 8px rgba(0, 0, 0, 0.15);
   box-shadow: 0 8px 16px 8px rgba(0, 0, 0, 0.15); }
   .window .title-bar {
     height: 32px;
-    background-color: #0288D1;
+    background-color: #01579B;
     overflow: hidden; }
     .window .title-bar .win-ctrl {
       position: absolute;
@@ -273,14 +270,16 @@ a:active.shadowed, a:active .shadowed {
             border: 1px solid rgba(255, 255, 255, 0.54); }
   .window .tool-bar {
     height: 64px;
-    background-color: #03A9F4;
+    background-color: #0277BD;
     overflow: hidden;
     padding-left: 16px; }
     .window .tool-bar h1.page-title {
+      display: inline-block;
       margin: 0;
       font-size: 20px;
       line-height: 64px;
-      color: rgba(255, 255, 255, 0.87); }
+      color: #ffffff;
+      cursor: default; }
   .window .content {
     position: absolute;
     box-sizing: border-box;
@@ -290,6 +289,68 @@ a:active.shadowed, a:active .shadowed {
     height: 100%;
     z-index: -1;
     background-color: rgba(255, 255, 255, 0.87); }
+    .window .content .overlay {
+      position: absolute;
+      margin-top: -96px;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-color: rgba(0, 0, 0, 0.3); }
+  .window.active .title-bar {
+    background-color: #0288D1; }
+  .window.active .tool-bar {
+    background-color: #03A9F4; }
+  .window.active .content .overlay {
+    pointer-events: none;
+    background-color: transparent; }
+  .window .sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 256px;
+    height: 100%;
+    background-color: #fbfbfb;
+    overflow: hidden;
+    -webkit-box-shadow: 3px 0 3px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 3px 0 3px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 0 3px 3px rgba(0, 0, 0, 0.3); }
+    .window .sidebar .aside-content {
+      overflow: auto;
+      height: 100%;
+      margin-right: -18px; }
+    .window .sidebar .header {
+      background-color: rgba(0, 0, 0, 0.7);
+      overflow: hidden; }
+      .window .sidebar .header h2 {
+        font-size: 20px;
+        line-height: 48px;
+        height: 48px;
+        margin: 8px 0 8px;
+        padding: 0 16px;
+        color: #ffffff;
+        font-weight: normal; }
+    .window .sidebar h3 {
+      font-size: 14px;
+      font-weight: normal;
+      height: 48px;
+      line-height: 48px;
+      margin: 0;
+      padding: 0 16px;
+      border-top: 1px solid #E0E0E0;
+      color: #03A9F4; }
+      .window .sidebar h3:first-of-type {
+        border-top: none; }
+    .window .sidebar ul {
+      margin: 0;
+      padding: 0;
+      list-style: none; }
+      .window .sidebar ul li {
+        padding: 0; }
+        .window .sidebar ul li a {
+          display: block;
+          padding: 0 16px;
+          line-height: 48px;
+          color: #000000; }
   .window iframe {
     width: 100%;
     height: 100%; }

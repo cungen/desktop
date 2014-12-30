@@ -6,11 +6,10 @@
     background-color: map_get($Black, Disable)
     overflow: hidden
     z-index: 1000
-    +border-radius(2px)
     +box-shadow(0 8px 16px 8px rgba(0, 0, 0, .15))
     .title-bar
         height: 32px
-        background-color: map_get($theme-color, 700)
+        background-color: map_get($theme-color, 900)
         overflow: hidden
         .win-ctrl
             position: absolute
@@ -74,14 +73,16 @@
                             border: 1px solid map_get($Black, Secondary)
     .tool-bar
         height: 64px
-        background-color: map_get($theme-color, 500)
+        background-color: map_get($theme-color, 800)
         overflow: hidden
         padding-left: 16px
         h1.page-title
+            display: inline-block
             margin: 0
             font-size: 20px
             line-height: 64px
-            color: map_get($Black, Text)
+            color: map_get($Black, 100)
+            cursor: default
     .content
         position: absolute
         box-sizing: border-box
@@ -91,6 +92,68 @@
         height: 100%
         z-index: -1
         background-color: map_get($Black, Text)
+        .overlay
+            position: absolute
+            margin-top: -96px
+            width: 100%
+            height: 100%
+            z-index: 1
+            background-color: map_get($White, Disable)
+    &.active
+        .title-bar
+            background-color: map_get($theme-color, 700)
+        .tool-bar
+            background-color: map_get($theme-color, 500)
+        .content
+            .overlay
+                pointer-events: none
+                background-color: transparent
+    .sidebar
+        position: absolute
+        left: 0
+        top: 0
+        width: 256px
+        height: 100%
+        background-color: #fbfbfb
+        overflow: hidden
+        +box-shadow(3px 0 3px 3px rgba(0, 0, 0, 0.3))
+        .aside-content
+            overflow: auto
+            height: 100%
+            margin-right: -18px
+        .header
+            background-color: map_get($White, Secondary)
+            overflow: hidden
+            h2
+                font-size: 20px
+                line-height: 48px
+                height: 48px
+                margin: 8px 0 8px
+                padding: 0 16px
+                color: map_get($Black, 100)
+                font-weight: normal
+        h3
+            font-size: 14px
+            font-weight: normal
+            height: 48px
+            line-height: 48px
+            margin: 0
+            padding: 0 16px
+            border-top: 1px solid map_get($Grey, 300)
+            color: map_get($theme-color, 500)
+            &:first-of-type
+                border-top: none
+        ul
+            margin: 0
+            padding: 0
+            list-style: none
+            li
+                padding: 0
+                a
+                    display: block
+                    padding: 0 16px
+                    line-height: 48px
+                    color: map_get($White, Text)
     iframe
         width: 100%
         height: 100%

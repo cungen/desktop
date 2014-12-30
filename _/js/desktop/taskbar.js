@@ -20,8 +20,7 @@
                     var appName = $(this).parent().attr('class').replace('active', '').trim();
                     if (appName) {
                         var windowList = taskList[appName];
-
-                        clearTimeout(tout);
+                        tout ? clearTimeout(tout) : null;
                         if(taskList[appName].windows.length > 1) {
                             var delay = 0;
                             if (hasShowMulWin) {
@@ -35,6 +34,7 @@
                                     multiHTML += '<li class="' + appName + '"><a>' + appName + '</a></li>';
                                 }
                             }
+                            $this.find('.multi-window').show();
                             $this
                                 .find('.multi-window')
                                 .html(multiHTML)
@@ -56,7 +56,7 @@
                 $this.delegate('.tasks li a', 'mouseenter', function() {
                     var appName = $(this).parent().attr('class').replace('active', '').trim(),
                         left = $(this).parent().position().left + 56;
-                    clearTimeout(tout);
+                    tout ? clearTimeout(tout) : null;
                     tout = window.setTimeout(function() {
                         var delay = 0;
                         if (hasShowMulWin) {
@@ -80,7 +80,7 @@
                     }, 500);
                 }).delegate('.tasks li a', 'mouseleave', function() {
                     if (hasShowMulWin) {
-                        clearTimeout(tout);
+                        tout ? clearTimeout(tout) : null;
                         tout = window.setTimeout(function() {
                             $this.find('.multi-window').hide();
                             hasShowMulWin = false;
@@ -89,11 +89,11 @@
                 });
 
                 $this.delegate('.multi-window', 'mouseenter', function() {
-                    clearTimeout(tout);
+                    tout ? clearTimeout(tout) : null;
                 });
 
                 $this.delegate('.multi-window', 'mouseleave', function() {
-                    clearTimeout(tout);
+                    tout ? clearTimeout(tout) : null;
                     tout = window.setTimeout(function() {
                         $this.find('.multi-window').hide();
                         hasShowMulWin = false;

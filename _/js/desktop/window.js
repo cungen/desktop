@@ -3,24 +3,62 @@
     var winList = [];
 
     function createHTML(options) {
-        var childHTML = '<div class="title-bar"><ul class="win-ctrl">';
-        options.control.indexOf('close') > -1 ? childHTML += '<li><a class="close"><i></i></a></li>' : null;
-        options.control.indexOf('max') > -1 ? childHTML += '<li><a class="max"><i></i></a></li>' : null;
-        options.control.indexOf('min') > -1 ? childHTML += '<li><a class="min"><i></i></a></li>' : null;
-        childHTML += '</ul></div>';
-        childHTML += '<div class="tool-bar">' +
-            '<h1 class="page-title">' + options.appName + '</h1>' +
-            '' + (options.toolBar ? options.toolBar : '') + '</div>';
-        childHTML += '<div class="menu-bar">' + (options.menuBar ? options.menuBar : '') + '</div>';
-        childHTML += '<div class="content">';
+        var childHTML = [];
+        childHTML.push('<div class="title-bar"><ul class="win-ctrl">');
+        options.control.indexOf('close') > -1 ? childHTML.push('<li><a class="close"><i></i></a></li>') : null;
+        options.control.indexOf('max') > -1 ? childHTML.push('<li><a class="max"><i></i></a></li>') : null;
+        options.control.indexOf('min') > -1 ? childHTML.push('<li><a class="min"><i></i></a></li>') : null;
+        childHTML.push('</ul></div>');
+        childHTML.push('<div class="tool-bar"><h1 class="page-title">');
+        if (options.side) {
+            childHTML.push('<i class="fa fa-fw fa-reorder"></i>');
+        }
+        childHTML.push(options.appName + '</h1>' +
+            '' + (options.toolBar ? options.toolBar : '') + '</div>');
+        childHTML.push('<div class="menu-bar">' + (options.menuBar ? options.menuBar : '') + '</div>');
+        childHTML.push('<div class="content"><div class="overlay"></div>');
         if (options.url) {
-            childHTML += '<iframe src="' + options.url + '" frameborder="0"></iframe></div>';
+            childHTML.push('<iframe src="' + options.url + '" frameborder="0"></iframe></div>');
         } else {
-            childHTML += (options.content ? options.content : '') + '</div>';
+            childHTML.push((options.content ? options.content : '') + '</div>');
         }
 
-        childHTML += '<div class="status-bar">' + (options.statusBar ? options.statusBar : '') + '</div>';
-        return childHTML;
+        childHTML.push('<div class="status-bar">' + (options.statusBar ? options.statusBar : '') + '</div>');
+        if (options.side) {
+            childHTML.push('<div class="sidebar"></div>');
+        }
+        return childHTML.join('');
+    }
+
+    function toggleSide($this) {
+        var side = $this.find('.sidebar');
+        if (side.is(':visible')) {
+            side.animate({ left: '-' + side.width() + 'px' }, 500);
+            setTimeout(function() {
+                side.hide();
+            }, 500);
+            $this.find('.sidebar-overlay').remove();
+        } else {
+            side.css({
+                left: '-' + side.width() + 'px'
+            });
+            side.show().animate({ left: 0 }, 500);
+            $('<div/>', { class: 'sidebar-overlay' })
+                .appendTo($this)
+                .css({
+                    position: 'absolute',
+                    width: '100%',
+                    height: $this.height(),
+                    right: 0,
+                    top: 0,
+                    'background-color': 'rgba(0, 0, 0, .5)'
+                })
+                .animate({
+                    width: $this.width() - $this.find('.sidebar').width()
+                }, 500).click(function() {
+                    toggleSide($this);
+                });
+        }
     }
 
     var methods = {
@@ -39,6 +77,7 @@
                 menuBar: '',
                 content: '',
                 statusBar: '',
+                side: null, // left or right or null
                 position: {
                     x: 20 + 'px',
                     y: 20 + 'px'
@@ -49,14 +88,16 @@
                 }
             }, options);
 
-            $('body').on('mouseup', function() {
-                $('body').unbind('mousemove');
+            $('.wrap-container').on('mouseup', function() {
+                $('.wrap-container').unbind('mousemove');
             });
 
             return this.each(function() {
                 var $this = $(this);
                 $this.hide();
                 $this.append(createHTML(settings));
+                $('.window.active').removeClass('active');
+                $this.addClass('active');
                 // init window data
                 if (!$this.data('window')) {
                     $this.data('window', {
@@ -78,12 +119,34 @@
                 // add to the task bar
                 $('.taskbar').taskbar('addWindow', $this);
 
+                // load the sidebar asynchronously
+                $this.find('.sidebar').hide();
+                if (settings.side) {
+                    $.ajax({
+                        url: settings.side,
+                        dataType: 'html'
+                    }).done(function(data) {
+                        if (data) {
+                            $this.find('.sidebar').append(data);
+                        }
+                    });
+                    $this.find('.page-title').click(function() {
+                        toggleSide($this);
+                    });
+
+                    $this.delegate('.sidebar li a', 'click', function(e) {
+                        e.preventDefault();
+                        $this.find('iframe').attr('src', $(this).attr('href'));
+                        toggleSide($this);
+                    });
+                }
+
                 // movement event
                 $this.find('.title-bar').on('mousedown', function(event) {
                     event.preventDefault();
                     var startX = event.pageX - $this.position().left;
                     var startY = event.pageY - $this.position().top;
-                    $('body').bind('mousemove', function(e) {
+                    $('.wrap-container').bind('mousemove', function(e) {
                         e.preventDefault();
                         $this.css({
                             left: e.pageX - startX + 'px',
@@ -93,7 +156,7 @@
                 });
 
                 // z-index event
-                $this.on('mousedown', function() {
+                $this.on('mouseup', function() {
                     $('.taskbar').taskbar('active', $this);
                     methods.active($this);
                 });
@@ -117,6 +180,8 @@
         active: function($this) {
             var winObj = $this ? $this : this;
             var i = winList.indexOf(winObj.toArray()[0]);
+            $('.window.active').removeClass('active');
+            winObj.addClass('active');
 
             winList.splice(i, 1);
             winList.push(winObj.toArray()[0]);
