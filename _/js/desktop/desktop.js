@@ -12,7 +12,6 @@
         }
 
         side = $(this).attr('data-side-url');
-        Log(side);
         var win = $('<div class="window"></div>').appendTo('.wrap-container');
         appName = $(this).attr('data-name');
         win.window({
@@ -20,7 +19,11 @@
             icon: icon,
             img: img,
             side: side,
-            url: $(this).attr('data-href')
+            url: $(this).attr('data-href'),
+            position: {
+                x: $(this).position().left + $(this).width() / 2,
+                y: $(this).position().top + $(this).height() / 3
+            }
         });
     });
 })(jQuery);

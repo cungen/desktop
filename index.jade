@@ -11,6 +11,7 @@ block content
             .start
                 a.menu(title='Start', data-app='demos')
                     img.shadowed(src='./_/imgs/icons/icon-home.png')
+            ul.start-menu
             ul.tasks
             ul.multi-window
         .desktop
@@ -20,9 +21,19 @@ block content
                         img.shadowed(src='./_/imgs/icons/icon-blog.png')
                         span Blog
                 li
+                    a(data-href='mobile/events.html', data-side-url='mobile/nav.html', data-name='Mobile')
+                        img.shadowed(src='./_/imgs/icons/icon-mobile.png')
+                        span Mobile
+            ul.apps
+                li
                     a(data-href='demos/index.html', data-name='Todo')
                         img.shadowed(src='./_/imgs/icons/icon-todo.png')
                         span Todo
+                li
+                    a(data-href='saying/index.html', data-name='Sayings')
+                        img.shadowed(src='./_/imgs/icons/icon-saying.png')
+                        span Sayings
+            ul.apps
                 li
                     a(data-href='threejs/index.html', data-side-url='threejs/nav.html', data-name='threejs')
                         i.fa.fa-paper-plane-o

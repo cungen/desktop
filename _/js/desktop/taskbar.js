@@ -16,7 +16,42 @@
             return this.each(function() {
                 var $this = $(this);
 
+                $this.find('.start').on('click', function() {
+                    if ($this.find('.start-menu').is(':visible')) {
+                        $this.find('.start-menu').hide();
+                    } else {
+                        if ($(this).data('hasData')) {
+                            $this.find('.start-menu').show(300);
+                        } else {
+                            var appListStr = [];
+                            $('.desktop .apps li a').each(function() {
+                                var iconRimg = '';
+                                if ($(this).find('i').length && $(this).find('i').length > 0) {
+                                    var icon = $(this).find('i').attr('class').match(/(fa-[^\s"]*)/g)[0];
+                                    iconRimg = '<i class="fa ' + icon + '"></i>'
+                                } else {
+                                    var img = $(this).find('img').attr('src');
+                                    iconRimg = '<img src="' + img + '" />';
+                                }
+                                appListStr.push('<li><a>' + iconRimg + '<span>' + $(this).attr('data-name') + '</span></a></li>')
+                            });
+                            $this
+                                .find('.start-menu')
+                                .html(appListStr);
+                            $this.find('.start-menu').show(300);
+                            $(this).data('hasData', true);
+                        }
+                    }
+                });
+
+                $this.delegate('.start-menu li a', 'click', function() {
+                    var index = $(this).parent().index();
+                    $('.desktop .apps li:eq(' + index + ')').find('a').trigger('click');
+                    $this.find('.start-menu').hide();
+                });
+
                 $this.delegate('.tasks li a', 'click', function() {
+                    $this.find('.start-menu').hide(300);
                     var appName = $(this).parent().attr('class').replace('active', '').trim();
                     if (appName) {
                         var windowList = taskList[appName];
@@ -58,6 +93,7 @@
                         left = $(this).parent().position().left + 56;
                     tout ? clearTimeout(tout) : null;
                     tout = window.setTimeout(function() {
+                        $this.find('.start-menu').hide(300);
                         var delay = 0;
                         if (hasShowMulWin) {
                             delay = 300;
@@ -76,11 +112,12 @@
                             .animate({
                                 left: left
                             }, delay);
+                        $this.find('.multi-window').show();
                         hasShowMulWin = true;
                     }, 500);
                 }).delegate('.tasks li a', 'mouseleave', function() {
+                    tout ? clearTimeout(tout) : null;
                     if (hasShowMulWin) {
-                        tout ? clearTimeout(tout) : null;
                         tout = window.setTimeout(function() {
                             $this.find('.multi-window').hide();
                             hasShowMulWin = false;

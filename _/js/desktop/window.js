@@ -11,7 +11,9 @@
         childHTML.push('</ul></div>');
         childHTML.push('<div class="tool-bar"><h1 class="page-title">');
         if (options.side) {
-            childHTML.push('<i class="fa fa-fw fa-reorder"></i>');
+            childHTML.push('<i class="fa fa-reorder"></i>');
+        } else {
+            childHTML.push('<img src="' + options.img + '"/>')
         }
         childHTML.push(options.appName + '</h1>' +
             '' + (options.toolBar ? options.toolBar : '') + '</div>');
@@ -27,6 +29,12 @@
         if (options.side) {
             childHTML.push('<div class="sidebar"></div>');
         }
+
+        // resize elements
+        childHTML.push('<div class="resize">' +
+            '<div class="top"></div><div class="right"></div>' +
+            '<div class="bottom"></div><div class="left"></div>' +
+            '<div class="corner-left-bottom"></div><div class="corner-right-bottom"></div></div>');
         return childHTML.join('');
     }
 
@@ -130,7 +138,7 @@
                             $this.find('.sidebar').append(data);
                         }
                     });
-                    $this.find('.page-title').click(function() {
+                    $this.find('.page-title i').click(function() {
                         toggleSide($this);
                     });
 
@@ -153,6 +161,8 @@
                             top: e.pageY - startY + 'px'
                         });
                     });
+                }).on('dblclick', function() {
+                    methods.max($this);
                 });
 
                 // z-index event
@@ -172,6 +182,58 @@
 
                 $this.find('.min').click(function() {
                     methods.min($this);
+                });
+
+                // resize event
+                $this.find('.resize .right').on('mousedown', function() {
+                    $('.wrap-container').bind('mousemove', function(e) {
+                        $this.width((e.pageX - $this.position().left > 200) ? e.pageX - $this.position().left : 200);
+                        e.preventDefault();
+                    });
+                });
+                $this.find('.resize .bottom').on('mousedown', function() {
+                    $('.wrap-container').bind('mousemove', function(e) {
+                        $this.height((e.pageY - $this.position().top > 200) ? e.pageY - $this.position().top : 200);
+                        e.preventDefault();
+                    });
+                });
+                $this.find('.resize .corner-right-bottom').on('mousedown', function() {
+                    $('.wrap-container').bind('mousemove', function(e) {
+                        $this.height((e.pageY - $this.position().top > 200) ? e.pageY - $this.position().top : 200);
+                        $this.width((e.pageX - $this.position().left > 200) ? e.pageX - $this.position().left : 200);
+                        e.preventDefault();
+                    });
+                });
+                $this.find('.resize .corner-left-bottom').on('mousedown', function() {
+                    var startX = $this.position().left + $this.width();
+                    $('.wrap-container').bind('mousemove', function(e) {
+                        $this.height((e.pageY - $this.position().top > 200) ? e.pageY - $this.position().top : 200);
+                        $this.width((startX - e.pageX > 200) ? startX - e.pageX : 200);
+                        $this.css({
+                            left: (startX - e.pageX > 200) ? e.pageX : $this.position().left
+                        });
+                        e.preventDefault();
+                    });
+                });
+                $this.find('.resize .left').on('mousedown', function() {
+                    var startX = $this.position().left + $this.width();
+                    $('.wrap-container').bind('mousemove', function(e) {
+                        $this.width((startX - e.pageX > 200) ? startX - e.pageX : 200);
+                        $this.css({
+                            left: (startX - e.pageX > 200) ? e.pageX : $this.position().left
+                        });
+                        e.preventDefault();
+                    });
+                });
+                $this.find('.resize .top').on('mousedown', function() {
+                    var startY = $this.position().top + $this.height();
+                    $('.wrap-container').bind('mousemove', function(e) {
+                        $this.height((startY - e.pageY > 200) ? startY - e.pageY : 200);
+                        $this.css({
+                            top: (startY - e.pageY > 200) ? e.pageY : $this.position().top
+                        });
+                        e.preventDefault();
+                    });
                 });
             });
         },
