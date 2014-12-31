@@ -17,9 +17,9 @@ html.no-js(xmlns:ng='http://angularjs.org')
         meta(name='viewport', content='width=device-width')
         link(rel='icon', type='image/png', href='./imgs/logo.png')
         link(rel='shortcut icon', type='image/png', href='./imgs/logo.png')
-        link(rel='stylesheet', href='./_/css/lib/normalize.min.css')
+        link(rel='stylesheet', href='./public/css/lib/normalize.min.css')
         link(rel='stylesheet', href='./bower_components/fontawesome/css/font-awesome.min.css')
-        link(rel='stylesheet', href='./_/css/all.css')
+        link(rel='stylesheet', href='./public/css/all.css')
 
         block styles
 
@@ -35,12 +35,12 @@ html.no-js(xmlns:ng='http://angularjs.org')
         script(src='./bower_components/lodash/dist/lodash.min.js')
         script(src='./bower_components/angular/angular.min.js')
 
-        script(src='./_/js/config.js')
-        script(src='./_/js/modules-init.js')
+        script(src='./public/js/config.js')
+        script(src='./public/js/modules-init.js')
 
         // controllers
 
         // services
-        script(src='./_/js/services/LocalStorageService.js')
+        script(src='./public/js/services/LocalStorageService.js')
         block script
-        script(src='./_/js/angular-startup.js')
+        script(src='./public/js/angular-startup.js')

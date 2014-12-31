@@ -1,16 +1,16 @@
-extends ./_/views/_layout/base
+extends public/views/layout/base
 block script
-    script(src='./_/js/utils/log.js')
-    script(src='./_/js/desktop/taskbar.js')
-    script(src='./_/js/desktop/window.js')
-    script(src='./_/js/desktop/desktop.js')
-    script(src='./_/js/controllers/DesktopController.js')
+    script(src='./public/js/utils/log.js')
+    script(src='./public/js/desktop/taskbar.js')
+    script(src='./public/js/desktop/window.js')
+    script(src='./public/js/desktop/desktop.js')
+    script(src='./public/js/controllers/DesktopController.js')
 block content
     .wrap-container
         .taskbar(ng-controller='DesktopController')
             .start
                 a.menu(title='Start', data-app='demos')
-                    img.shadowed(src='./_/imgs/icons/icon-home.png')
+                    img.shadowed(src='./public/imgs/icons/icon-home.png')
             ul.start-menu
             ul.tasks
             ul.multi-window
@@ -18,20 +18,20 @@ block content
             ul.apps
                 li
                     a(data-href='http://iamroot.cn', data-name='Blog')
-                        img.shadowed(src='./_/imgs/icons/icon-blog.png')
+                        img.shadowed(src='./public/imgs/icons/icon-blog.png')
                         span Blog
                 li
                     a(data-href='mobile/events.html', data-side-url='mobile/nav.html', data-name='Mobile')
-                        img.shadowed(src='./_/imgs/icons/icon-mobile.png')
+                        img.shadowed(src='./public/imgs/icons/icon-mobile.png')
                         span Mobile
             ul.apps
                 li
                     a(data-href='demos/index.html', data-name='Todo')
-                        img.shadowed(src='./_/imgs/icons/icon-todo.png')
+                        img.shadowed(src='./public/imgs/icons/icon-todo.png')
                         span Todo
                 li
                     a(data-href='saying/index.html', data-name='Sayings')
-                        img.shadowed(src='./_/imgs/icons/icon-saying.png')
+                        img.shadowed(src='./public/imgs/icons/icon-saying.png')
                         span Sayings
             ul.apps
                 li
