@@ -15,10 +15,10 @@
         } else {
             childHTML.push('<img src="' + options.img + '"/>')
         }
-        childHTML.push(options.appName + '</h1>' +
+        childHTML.push(options.appName + '</h1><ul class="tools"><li><a class="refresh"><i class="fa fa-refresh"></i></a></li>' +
             '' + (options.toolBar ? options.toolBar : '') + '</div>');
         childHTML.push('<div class="menu-bar">' + (options.menuBar ? options.menuBar : '') + '</div>');
-        childHTML.push('<div class="content"><div class="overlay"></div>');
+        childHTML.push('<div class="content"><div class="overlay"></ul></div>');
         if (options.url) {
             childHTML.push('<iframe src="' + options.url + '" frameborder="0"></iframe></div>');
         } else {
@@ -148,6 +148,10 @@
                         toggleSide($this);
                     });
                 }
+
+                $this.find('.tool-bar .refresh').on('click', function() {
+                    $this.find('iframe').attr('src', $this.find('iframe').attr('src'));
+                });
 
                 // movement event
                 $this.find('.title-bar').on('mousedown', function(event) {

@@ -340,6 +340,23 @@ a:active.shadowed, a:active .shadowed {
         width: 36px;
         height: auto;
         cursor: default; }
+    .window .tool-bar .tools {
+      position: absolute;
+      right: 16px;
+      top: 8px;
+      height: 48px;
+      list-style: none;
+      padding: 0;
+      margin: 0; }
+      .window .tool-bar .tools li a {
+        text-align: center;
+        width: 48px;
+        font-size: 24px;
+        height: 48px;
+        line-height: 48px;
+        color: rgba(255, 255, 255, 0.54);
+        display: block;
+        cursor: pointer; }
   .window .content {
     position: absolute;
     box-sizing: border-box;
@@ -360,7 +377,7 @@ a:active.shadowed, a:active .shadowed {
     background-color: #0288D1; }
   .window.active .tool-bar {
     background-color: #03A9F4; }
-    .window.active .tool-bar h1.page-title {
+    .window.active .tool-bar h1.page-title, .window.active .tool-bar .tools a {
       color: #ffffff; }
   .window.active .content .overlay {
     pointer-events: none;
