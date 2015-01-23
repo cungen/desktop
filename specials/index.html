@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Big Data</title>
+    <link rel="stylesheet" href="../public/js/libs/pace/dataurl.css"/>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #5c8692;
+        }
+        svg {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .pace .pace-progress {
+            height: 2px;
+            background-color: #ffffff;
+        }
+        .pace .pace-progress-inner {
+            box-shadow: 0 0 10px #ffffff, 0 0 5px #ffffff;
+        }
+        .pace .pace-activity {
+            right: auto;
+            left: 15px;
+            border-top-color: #ffffff;
+            border-left-color: #ffffff;
+        }
+    </style>
+
+</head>
+<body>
+<svg id="svg-bg"></svg>
+<script src="../public/js/libs/pace/pace.min.js"></script>
+<script src="../public/js/libs/snap.svg-min.js"></script>
+<script src="../public/js/utils/log.js"></script>
+<script src="../public/js/libs/Tween.js"></script>
+<script src="../public/js/libs/requestAnimationFrame.js"></script>
+<script src="bg-map.js"></script>
+<script>
+
+    (function() {
+        var s = Snap("#svg-bg");
+        var bgImage,
+            grid,
+            hexagons,
+            bottomLine,
+            persons,
+            personWidth = 10,
+            listHeaders;
+
+        initWidgets();
+        function initWidgets() {
+            var width = document.getElementsByTagName('svg')[0].offsetWidth,
+                height = document.getElementsByTagName('svg')[0].offsetHeight;
+
+            /********** init bg **********/
+            var bgMatrix = new Snap.Matrix();
+            bgMatrix.scale(0.45, 0.45);
+            bgMatrix.translate(50, 50);
+            bgImage = getBgImage(s);
+            bgImage.attr({ stroke: '#ffffff', fill: 'rgba(255,255,255,1)' });
+            bgImage.attr({ opacity: 0.25 });
+            bgImage.animate({
+                transform: bgMatrix
+            }, 0);
+            /********** bg end **********/
+
+            /********** init grid widget **********/
+            var gridAttr = { stroke: '#ffffff', 'strokeWidth': 2, fill: 'rgba(0, 0, 0, 0)', opacity: 0.95 };
+            var gridArray = [];
+            for (var i = 0; i < 5; i++) {
+                gridArray.push(s.rect(0, i * 42, 56, 34, 5, 5).attr(gridAttr));
+                gridArray.push(s.rect(64, i * 42, 56, 34, 5, 5).attr(gridAttr));
+                gridArray.push(s.rect(128, i * 42, 56, 34, 5, 5).attr(gridAttr));
+            }
+            grid = s.group.apply(s, gridArray);
+            grid.transform('t100,' + (height - 280));
+            /********** grid widget end **********/
+
+            /********** init hexagon widget **********/
+            var hexagonAttr = { stroke: '#ffffff', 'strokeWidth': 6, fill: 'rgba(0, 0, 0, 0)', opacity: 0.85 };
+            var hexagonArray = [];
+            var hexagonWidth = 30;
+            [2, 1, 0].forEach(function(i) {
+                if (i !==  0) {
+                    hexagonArray.push(hexagon(s, (2 - i) * 1.8 * hexagonWidth, i * (hexagonWidth + 2) + 2 * hexagonWidth + 4, hexagonWidth).attr(hexagonAttr));
+                }
+                hexagonArray.push(hexagon(s, (2 - i) * 1.8 * hexagonWidth, i * (hexagonWidth + 2), hexagonWidth).attr(hexagonAttr));
+            });
+            hexagons = s.group.apply(s, hexagonArray);
+            hexagons.animate({
+                transform: 't120,80'
+            }, 0);
+            /********** hexagon widget end **********/
+
+            /********** people widget start **********/
+            var personX = 0, personY = 0;
+            var personArrary = [];
+            for (var i = 0; i < 5; i++) {
+                personArrary.push(person(s, personX, personY, personWidth));
+                if (i !== 4) {
+                    personArrary.push(person(s, personX, personY + 10.5 * personWidth, personWidth));
+                }
+                personX += personWidth * 2 / 3 * 6;
+            }
+            persons = s.group.apply(s, personArrary);
+            persons.attr({ fill: '#ffffff', opacity: 0.85 });
+            persons.transform('t' + (width - 20 * personWidth - 80) + ',' + (height - 35 - 24 * personWidth));
+            /********** people widget end **********/
+
+            /********** bottom line start **********/
+            bottomLine = s.path('M0 0 L80 0 L100 -20 ' +
+                'L280 -20 L290 -10 L390 -10 ' +
+                'L420 20 L570 20 L610 -20' +
+                'L730 -20 L745 -5 L875 -5' +
+                'L890 10 L1100 10 L1120 -10' +
+                'L1120 -10 L1350 -10' +
+                'L1380 20 L1570 20 L1610 -20' +
+                'L1730 -20 L1745 -5 L1875 -5' +
+                'L1890 10 L2890 10');
+            bottomLine.attr({ stroke: '#ffffff', strokeWidth: 2, fill: 'rgba(0,0,0,0)' });
+            bottomLine.transform('t0,' + (height - 35));
+            /********** bottom line end **********/
+
+            /********** project list start **********/
+            var listHeaderArray = [];
+            var listHeaderY = 0;
+            for (var i = 0; i < 3; i++) {
+                listHeaderArray.push(listHeader(s, 0, listHeaderY));
+                if (i !== 2) {
+                    listHeaderArray.push(listHeader(s, 300, listHeaderY));
+                }
+                listHeaderY += 60;
+            }
+
+            listHeaders = s.group.apply(s, listHeaderArray);
+            listHeaders.transform('t350,200');
+
+            /********** project list end **********/
+
+        }
+
+        // timeStart will be reset to 0 every 10 seconds.
+        var timeStart = 0;
+        _run();
+        function _run() {
+            var i;
+
+            if (timeStart % 120 === 0) { // 2s per time
+                for (i = 0; grid[i]; i++) {
+                    if (Math.random() > 0.75) {
+                        grid[i].attr({
+                            fill: '#ffffff'
+                        });
+                    } else {
+                        grid[i].attr({
+                            fill: 'rgba(0, 0, 0, 0)'
+                        });
+                    }
+
+                }
+            }
+
+            if (timeStart % 100 === 0) { // 3 times call every second;
+                if ((timeStart / 100) % 6 === 0) {
+                    for (i = 0; i < 5; i++) {
+                        hexagons[i].animate({
+                            opacity: 0,
+                            transform: 't-20,20'
+                        }, 200, mina.bounce);
+                    }
+                } else {
+                    if ((timeStart / 100) % 6 - 1 === 0) {
+                        for (i = 0; i < 5; i++) {
+                            hexagons[i].transform('t30, -30');
+                        }
+                    }
+                    hexagons[(timeStart / 100) % 6 - 1].animate({
+                        opacity: 1,
+                        transform: 't0,0'
+                    }, 200, mina.bounce);
+                }
+            }
+
+            if (timeStart % 60 === 0) {
+                if ((timeStart / 60) % 10 === 0) {
+                    for (i = 0; i < 9; i++) {
+                        persons[i].animate({
+                            opacity: 0,
+                            transform: 't-40,0'
+                        }, 500, mina.easeout);
+                    }
+                } else {
+                    if ((timeStart / 60) % 10 - 1 === 0) {
+                        for (i = 0; i < 9; i++) {
+                            persons[i].transform('t40,0');
+                        }
+                    }
+                    persons[(timeStart / 60) % 10 - 1].animate({
+                        opacity: 1,
+                        transform: 't0,0'
+                    }, 1100, mina.easeinout);
+                }
+            }
+
+            timeStart = timeStart > 600 ? 0 : timeStart + 1;
+            requestAnimationFrame(_run);
+        }
+
+        response();
+        window.onresize = response;
+        function response() {
+            var width = document.getElementsByTagName('svg')[0].offsetWidth,
+                height = document.getElementsByTagName('svg')[0].offsetHeight;
+                s = width / 1440;
+
+            var showGrid = false,
+                showBottomLine = false,
+                showPerson = false,
+                showHexagon = false;
+            if (width < 1024 && width > 768) {
+                grid.transform('T100,' + (height - 280));
+                bottomLine.attr({ opacity: 0 });
+                persons.transform('t100,' + (height - 35 - 24 * personWidth));
+            } else if (width < 768) {
+                hexagons.attr({ opacity: 0 });
+                grid.attr({ opacity: 0 });
+                bottomLine.attr({ opacity: 0 });
+                persons.attr({ opacity: 0 });
+            } else {
+                hexagons.attr({ opacity: 1 });
+                grid.attr({ opacity: 1 });
+                bottomLine.attr({ opacity: 1 });
+                persons.attr({ opacity: 1 });
+                grid.transform('T100,' + (height - 280));
+                bottomLine.transform('t0,' + (height - 35));
+                persons.transform('t' + (width - 20 * personWidth - 80) + ',' + (height - 35 - 24 * personWidth));
+            }
+        }
+
+
+        function hexagon(snap, x, y, w) {
+            return snap.path('M' + x + ' ' + y +
+            'L' + (x + w) + ' ' + y +
+            'L' + (x + w + w / 2) + ' ' + (y + w * Math.cos(Math.PI / 6)) +
+            'L' + (x + w) + ' ' + (y + 2 * w * Math.cos(Math.PI / 6)) +
+            'L' + x + ' ' + (y + 2 * w * Math.cos(Math.PI / 6)) +
+            'L' + (x - w / 2) + ' ' + (y + w * Math.cos(Math.PI / 6)) +
+            'Z');
+        }
+
+        function listHeader(snap, x, y) {
+            var group = [];
+            group.push(snap.circle(x + 20, y + 20, 20).attr({
+                stroke: '#ffffff',
+                strokeWidth: 4,
+                fill: 'rgba(0,0,0,0)'
+            }));
+            group.push(snap.circle(x + 20, y + 20, 12).attr({
+                stroke: '#ffffff',
+                strokeWidth: 4,
+                fill: 'rgba(0,0,0,0)'
+            }));
+            group.push(snap.circle(x + 20, y + 20, 4).attr({
+                fill: '#ffffff'
+            }));
+            group.push(snap.path('M' + (x + 40) + ' ' + (y + 20) + 'L' + (x + 70) + ' ' + (y + 20)).attr({
+                stroke: '#ffffff',
+                strokeWidth: 2
+            }));
+            group.push(snap.path('M' + (x + 70) + ' ' + (y + 20) + 'A 20 20 0 0 1 ' + (x + 90) + ' ' + y +
+                'L' + (x + 240) + ' ' + y + 'A 20 20 0 0 1 ' + (x + 240) + ' ' + (y + 40) + 'L' + (x + 90) + ' ' +
+                (y + 40) + 'A 20 20 0 0 1 ' + (x + 70) + ' ' + (y + 20)).attr({
+                stroke: '#ffffff',
+                strokeWidth: 2,
+                fill: '#ffffff'
+            }));
+            return snap.group.apply(snap, group);
+        }
+
+        function person(snap, x, y, w) {
+            var path = [];
+            var r = 2 * w / 3;
+            var tx, ty; // temp x, temp y;
+            var interval = w / 10;
+            tx = x + 2.5 * r; ty = y + 1.5 * r;
+            path.push('M' + (tx - w) + ' ' + ty  + 'A' + w + ' ' + w + ' 0 0 1 ' + (tx + w) + ' ' + ty);
+            path.push('A' + w + ' ' + w + ' 0 0 1 ' + (tx - w) + ' ' + ty);
+            tx = tx - w - 1.5 * interval; ty = ty + w + 1.5 * interval;
+            path.push('M' + tx + ' ' + ty);
+            tx += 2 * w + 3 * interval;
+            path.push('L' + tx + ' ' + ty);
+            tx += r; ty += r;
+            path.push('A' + r + ' ' + r + ' 0 0 1 ' + tx + ' ' + ty);
+            ty += 2.2 * w;
+            path.push('L' + tx + ' ' + ty);
+            tx -= r;
+            path.push('A' + r / 2 + ' ' + r / 2 + ' 0 0 1 ' + tx + ' ' + ty);
+            ty -= 1.5 * w;
+            path.push('L' + tx + ' ' + ty);
+            tx -= interval;
+            path.push('A 1 1' + ' 0 0 0 ' + tx + ' ' + ty);
+            ty += 5.6 * w;
+            path.push('L' + tx + ' ' + ty);
+            tx -= w;
+            path.push('A' + w / 2 + ' ' + w / 2 + ' 0 0 1 ' + tx + ' ' + ty);
+            ty -= 3 * w;
+            path.push('L' + tx + ' ' + ty);
+            tx -= interval;
+            path.push('A 1 1' + ' 0 0 0 ' + tx + ' ' + ty);
+            ty += 3 * w;
+            path.push('L' + tx + ' ' + ty);
+            tx -= w;
+            path.push('A' + w / 2 + ' ' + w / 2 + ' 0 0 1 ' + tx + ' ' + ty);
+            ty -= 5.6 * w;
+            path.push('L' + tx + ' ' + ty);
+            tx -= interval;
+            path.push('A 1 1' + ' 0 0 0 ' + tx + ' ' + ty);
+            ty += 1.5 * w;
+            path.push('L' + tx + ' ' + ty);
+            tx -= r;
+            path.push('A' + r / 2 + ' ' + r / 2 + ' 0 0 1 ' + tx + ' ' + ty);
+            ty -= 2.2 * w;
+            path.push('L' + tx + ' ' + ty);
+            tx += r; ty -= r;
+            path.push('A' + r + ' ' + r + ' 0 0 1 ' + tx + ' ' + ty);
+            return snap.path(path.join(''));
+        }
+    })();
+</script>
+</body>
+</html>
